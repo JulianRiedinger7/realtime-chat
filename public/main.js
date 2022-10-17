@@ -39,6 +39,7 @@ const analytics = getAnalytics(app);
 const db = getDatabase(app);
 const auth = getAuth();
 
+const chatHolder = document.querySelector('#chat-holder');
 const form = document.querySelector('form');
 const btnGoogle = document.querySelector('.google-btn');
 const textoLog = document.querySelector('.textoLog');
@@ -81,7 +82,7 @@ const signIn = () => {
 		form.classList.remove('d-none');
 		btnGoogle.classList.add('d-none');
 		textoLog.classList.add('d-none');
-		console.log('Auth en signin', auth);
+		chatHolder.classList.remove('d-none');
 	});
 };
 
@@ -90,6 +91,7 @@ const logout = () => {
 		form.classList.add('d-none');
 		btnGoogle.classList.remove('d-none');
 		textoLog.classList.remove('d-none');
+		chatHolder.classList.add('d-none');
 	});
 };
 
@@ -97,8 +99,6 @@ onChildAdded(msgRef, (snap) => {
 	const data = snap.val();
 	agregarAlChat(data);
 });
-
-console.log('getAuth', auth);
 
 form.addEventListener('submit', (evt) => {
 	evt.preventDefault();
@@ -121,6 +121,7 @@ onAuthStateChanged(auth, (userLog) => {
 		textoLog.classList.add('d-none');
 		loading.classList.add('d-none');
 		main.classList.remove('d-none');
+		chatHolder.classList.remove('d-none');
 	} else {
 		loading.classList.add('d-none');
 		main.classList.remove('d-none');
