@@ -52,10 +52,16 @@ const loading = document.querySelector('.loading');
 const msgRef = query(ref(db, 'mensajes/'), orderByChild('fecha'));
 
 const agregarAlChat = (data) => {
+	/* const fechaLocal = data.fecha.toLocaleString(); */
+
+	console.log(data.fecha);
+
 	listaMensajes.innerHTML += `
     <li class="list-group-item d-flex gap-2 align-items-center" id='${data.fecha}'>
 		<img src="${data.photo}" alt="${data.nombre}" />
-		${data.nombre}: ${data.mensaje}</li>
+		<span>${data.nombre}: ${data.mensaje}</span>
+		<span class='ms-auto'>${data.fecha}</span>
+		</li>
   `;
 
 	document
@@ -69,7 +75,7 @@ const agregarADatabase = (mensaje) => {
 		photo: auth.currentUser.photoURL,
 		email: auth.currentUser.email,
 		mensaje: mensaje,
-		fecha: Date.now(),
+		fecha: new Date().toLocaleTimeString(),
 	};
 	push(msgRef, objMensaje);
 };
